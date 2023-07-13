@@ -8,4 +8,4 @@ To further enhance usability, the component includes a search functionality. Sim
 
 The PeoplePage component is designed to handle loading states and error handling, ensuring a smooth and reliable experience for users. Whether you're building an application that requires managing a vast database of people or simply want to showcase a list of individuals, this component provides the necessary tools to efficiently navigate and interact with the data.
 
-Demolink: "https://Peti51.github.io/react_people-table-advanced"
+Demolink: "https://Peti51.github.io/advanced-table-react"
