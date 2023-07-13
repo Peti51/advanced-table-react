@@ -1,31 +1,11 @@
-# React People Table (Advanced) - Filterging and Sorting
+This react app is a powerful tool for displaying and managing a large array of people. It leverages React to provide sorting, filtering, and search capabilities for an enhanced user experience.
 
-> Here is [the working example](https://mate-academy.github.io/react_people-table-advanced/)
+With this component, you can easily sort the people based on various criteria. By clicking on the column headers, you can toggle between ascending and descending order, allowing you to organize the data in a way that best suits your needs.
 
-> Sorting and filtering tests are not implemented yet
+Additionally, the PeoplePage component enables you to filter the displayed people based on different parameters. You can choose to filter by sex, selecting from options such as "All," "Male," or "Female." Moreover, you can narrow down the results by specifying the centuries in which the people were born. The active centuries can be selected or deselected, providing flexibility in exploring the data.
 
-Using code from the [React People Table](https://github.com/mate-academy/react_people-table-basics#react-people-table)
-implement the ability to filter and sort people in the table.
+To further enhance usability, the component includes a search functionality. Simply enter a name or keyword in the search bar, and the table will dynamically update to display only the relevant results. This makes it quick and easy to find specific individuals in the large array of people.
 
-1. All the filters and sort params should be saved as URL Search Params, so you could share the link to show exactly what you see.
-1. Keep search params when navigating within the `People` page (when selecting a person or clicking the `People` link).
-1. The sidebar with the filters should appear only when people are loaded.
-1. `NameFilter` should update the `query` search param with the text from the input.
-    - show only people with the `name`, `motherName` or `fatherName` that match the query case insensitive;
-    - if the input is empty there should not be `query` in the search params.
-1. `CenturyFilter` should allow to choose several centuries or all of them.
-    - add `centuries` search params using `append` method  `getAll` method;
-1. Implement sorting by `name`, `sex`, `born` and `died` by clicking on arrows in a `th`;
-    - the first click on a column sorts people by the selected field ascending (`a -> z` or `0 -> 9`);
-    - the second click (when people are already sorted ascending by this field) reverses the order of sorting;
-    - the third click (when people are already sorted in reversed order by this field) disables sorting;
-    - use `sort` search param to save sort field;
-    - add `order=desc` (short for `descending`) if sorted in reversed order;
-    - if sorting is disabled there should not be `sort` and `order` search params;
+The PeoplePage component is designed to handle loading states and error handling, ensuring a smooth and reliable experience for users. Whether you're building an application that requires managing a vast database of people or simply want to showcase a list of individuals, this component provides the necessary tools to efficiently navigate and interact with the data.
 
-## Instructions
-
-- Implement a solution following the [React task guideline](https://github.com/mate-academy/react_task-guideline#react-tasks-guideline).
-- Use the [React TypeScript cheat sheet](https://mate-academy.github.io/fe-program/js/extra/react-typescript).
-- Open one more terminal and run tests with `npm test` to ensure your solution is correct.
-- Replace `<your_account>` with your Github username in the [DEMO LINK](https://Peti51.github.io/react_people-table-advanced/) and add it to the PR description.
+Demolink: "https://Peti51.github.io/react_people-table-advanced"
