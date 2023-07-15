@@ -9,5 +9,3 @@ The app includes a search feature, allowing users to search for specific individ
 The century filter component, FilterCenturies, enables users to filter people based on the centuries they were born in.
 
 Overall, this app leverages React and related technologies to efficiently manage and explore a large array of people with sorting, filtering, and search capabilities.
-
-Demolink: "https://Peti51.github.io/react_people-table-advanced"
