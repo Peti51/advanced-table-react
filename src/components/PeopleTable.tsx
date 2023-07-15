@@ -16,6 +16,13 @@ interface Props {
   setSearchParams: Dispatch<SetStateAction<URLSearchParams>>,
 }
 
+const categoriesSortingMapping: { [key: string]: PropName } = {
+  Name: PropName.Name,
+  Sex: PropName.Sex,
+  Born: PropName.Born,
+  Died: PropName.Died,
+};
+
 export const PeopleTable: React.FC<Props> = ({
   people,
   handleSort,
@@ -42,6 +49,8 @@ export const PeopleTable: React.FC<Props> = ({
     }
   }, []);
 
+  const categories = ['Name', 'Sex', 'Born', 'Died'];
+
   return (
     <table
       data-cy="peopleTable"
@@ -49,90 +58,39 @@ export const PeopleTable: React.FC<Props> = ({
     >
       <thead>
         <tr>
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Name
-              <a
-                href="#/people?sort=name"
-                onClick={() => handleSort(PropName.Name)}
-              >
-                <span className="icon">
-                  {sortOrder === SortType.Asc && sortField === PropName.Name
-                  && <i className="fas fa-sort-up" />}
-                  {sortOrder === SortType.Desc && sortField === PropName.Name
-                   && <i className="fas fa-sort-down" />}
-                  {![SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && <i className="fas fa-sort" />}
-                  {[SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && sortField !== PropName.Name
-                   && (<i className="fas fa-sort" />)}
-                </span>
-              </a>
-            </span>
-          </th>
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Sex
-              <a
-                href="#/people?sort=sex"
-                onClick={() => handleSort(PropName.Sex)}
-              >
-                <span className="icon">
-                  {sortOrder === SortType.Asc && sortField === PropName.Sex
-                  && <i className="fas fa-sort-up" />}
-                  {sortOrder === SortType.Desc && sortField === PropName.Sex
-                   && <i className="fas fa-sort-down" />}
-                  {![SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && <i className="fas fa-sort" />}
-                  {[SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && sortField !== PropName.Sex
-                   && (<i className="fas fa-sort" />)}
-                </span>
-              </a>
-            </span>
-          </th>
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Born
-              <a
-                href="#/people?sort=born&amp;order=desc"
-                onClick={() => handleSort(PropName.Born)}
-              >
-                <span className="icon">
-                  {sortOrder === SortType.Asc && sortField === PropName.Born
-                  && <i className="fas fa-sort-up" />}
-                  {sortOrder === SortType.Desc && sortField === PropName.Born
-                   && <i className="fas fa-sort-down" />}
-                  {![SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && <i className="fas fa-sort" />}
-                  {[SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && sortField !== PropName.Born
-                   && (<i className="fas fa-sort" />)}
-                </span>
-              </a>
-            </span>
-          </th>
-          <th>
-            <span className="is-flex is-flex-wrap-nowrap">
-              Died
-              <a
-                href="#/people?sort=died"
-                onClick={() => handleSort(PropName.Died)}
-              >
-                <span className="icon">
-                  {sortOrder === SortType.Asc && sortField === PropName.Died
-                  && <i className="fas fa-sort-up" />}
-                  {sortOrder === SortType.Desc && sortField === PropName.Died
-                   && <i className="fas fa-sort-down" />}
-                  {![SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && <i className="fas fa-sort" />}
-                  {[SortType.Asc, SortType.Desc].includes(sortOrder)
-                   && sortField !== PropName.Died
+          {categories.map((categorie) => {
+            return (
+              <th>
+                <span className="is-flex is-flex-wrap-nowrap">
+                  {categorie}
+                  <SearchLink
+                    onClick={() => {
+                      return handleSort(categoriesSortingMapping[categorie]);
+                    }}
+                    params={{
+                      sort: [SortType.Desc].includes(sortOrder)
+                        ? null
+                        : categoriesSortingMapping[categorie],
+                    }}
+                  >
+                    <span className="icon">
+                      {sortOrder === SortType.Asc
+                    && sortField === categoriesSortingMapping[categorie]
+                    && <i className="fas fa-sort-up" />}
+                      {sortOrder === SortType.Desc
+                    && sortField === categoriesSortingMapping[categorie]
+                    && <i className="fas fa-sort-down" />}
+                      {![SortType.Asc, SortType.Desc].includes(sortOrder)
+                    && <i className="fas fa-sort" />}
+                      {[SortType.Asc, SortType.Desc].includes(sortOrder)
+                    && sortField !== categoriesSortingMapping[categorie]
                     && (<i className="fas fa-sort" />)}
+                    </span>
+                  </SearchLink>
                 </span>
-              </a>
-            </span>
-          </th>
+              </th>
+            );
+          })}
           <th>Mother</th>
           <th>Father</th>
         </tr>
@@ -164,10 +122,10 @@ export const PeopleTable: React.FC<Props> = ({
               <td>{person.born}</td>
               <td>{person.died}</td>
               <td>
-                {person.mother
+                {person.mother !== undefined
                   ? (
                     <SearchLink
-                      params={{ slug: [String(person.mother?.slug)] }}
+                      params={{ slug: String(person.mother?.slug) }}
                       className="has-text-danger"
                       onClick={() => {
                         handleSelection(person.mother?.slug || '');
@@ -185,7 +143,7 @@ export const PeopleTable: React.FC<Props> = ({
                 {person.father
                   ? (
                     <SearchLink
-                      params={{ slug: [String(person.father?.slug)] }}
+                      params={{ slug: String(person.father?.slug) }}
                       onClick={() => {
                         handleSelection(person.father?.slug || '');
                       }}

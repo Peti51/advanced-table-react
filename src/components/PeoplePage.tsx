@@ -28,9 +28,9 @@ export const PeoplePage: React.FC<Props> = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const [isFiltered, setIsFiltered] = useState(false);
   const query = searchParams.get('query') || '';
-  const sexFilter = searchParams.get('sex') || 'All';
+  const sexFilter = searchParams.get('sex') || FilterType.All;
   const selectedCenturies
-  = searchParams.get('centuries') || '[15, 16, 17, 18, 19]';
+  = searchParams.get('centuries') || '[16, 17, 18, 19, 20]';
   const [currentUrl, setCurrentURl] = useState<number[]>([]);
 
   const handleCenturySelection = (centuries: number[]) => {
@@ -79,6 +79,8 @@ export const PeoplePage: React.FC<Props> = ({
     setActiveCenturies([15, 16, 17, 18, 19]);
     setSearchParams({ centuries: [15, 16, 17, 18, 19].join(',') });
     setSearchParams({ query: '' });
+    setSortOrder(SortType.Original);
+    setClickCount(3);
   };
 
   const setCurrentQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,10 +140,10 @@ export const PeoplePage: React.FC<Props> = ({
   });
 
   const filteredPeople: NewPerson[] = useMemo(() => {
-    return newPeople.filter((person) => {
+    return updatedPeople.filter((person) => {
       const functionality
       = person.name.toLowerCase().includes(query.toLowerCase().trim());
-      const century = Math.floor(person.born / 100);
+      const century = Math.ceil(person.born / 100);
 
       switch (sexFilter) {
         case FilterType.All:
@@ -207,12 +209,6 @@ export const PeoplePage: React.FC<Props> = ({
   }, [sortField, clickCount, setSortOrder, setSortField, setClickCount]);
 
   useEffect(() => {
-    if (selectedCenturies === '[15, 16, 17, 18, 19]') {
-      setActiveCenturies([15, 16, 17, 18, 19]);
-    }
-  }, []);
-
-  useEffect(() => {
     const actualUrl = window.location.href;
 
     const urlstr = actualUrl.toString().split('=');
@@ -226,6 +222,11 @@ export const PeoplePage: React.FC<Props> = ({
     if (filteredStrings.length > 1) {
       setActiveCenturies(filteredStrings);
       setCurrentURl(filteredStrings);
+    }
+
+    if (filteredStrings.length === 0) {
+      setActiveCenturies([16, 17, 18, 19, 20]);
+      setCurrentURl([16, 17, 18, 19, 20]);
     }
   }, []);
 
@@ -242,6 +243,13 @@ export const PeoplePage: React.FC<Props> = ({
 
     setCurrentURl(filteredStrings);
   }, [activeCenturies]);
+
+  useEffect(() => {
+    if (selectedCenturies === '[16, 17, 18, 19, 20]') {
+      setActiveCenturies([16, 17, 18, 19, 20]);
+      setCurrentURl([16, 17, 18, 19, 20]);
+    }
+  }, []);
 
   return (
     <>
